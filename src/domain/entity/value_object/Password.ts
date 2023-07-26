@@ -1,7 +1,9 @@
+import { ValidationError } from "../errors/ValidationError";
+
 export class Password {
     value: string;
     constructor(value: string) {
-      if (!this.isValid(value)) throw new Error("Invalid password");
+      if (!this.isValid(value)) throw new ValidationError("Invalid password")
       this.value = value;
     }
   

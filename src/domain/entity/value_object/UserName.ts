@@ -1,7 +1,9 @@
+import { ValidationError } from "../errors/ValidationError";
+
 export class UserName {
   value: string;
   constructor(value: string) {
-    if (!this.isValid(value)) throw new Error("Invalid userName");
+    if (!this.isValid(value)) throw new ValidationError("Invalid userName")
     this.value = value;
   }
 

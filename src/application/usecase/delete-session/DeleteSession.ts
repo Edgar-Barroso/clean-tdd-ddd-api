@@ -13,5 +13,6 @@ export class DeleteSession{
         for(const message of messages){
             await this.messageRepository.delete(message)
         }
+        await this.sessionRepository.delete(session)
     }
 }
