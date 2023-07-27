@@ -3,6 +3,7 @@ import { SessionRepository } from "@/domain/repository/SessionRepository";
 import { prisma } from "./Prisma";
 
 export class PrismaSessionRepository implements SessionRepository{
+    
     async deleteMany(): Promise<void> {
         await prisma.session.deleteMany()
     }

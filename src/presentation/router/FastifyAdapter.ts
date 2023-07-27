@@ -20,10 +20,7 @@ export class FastifyAdapter implements WebFramework {
       secret: env.JWT_SECRET,
     });
   }
-
-
-
-
+  
   on(url: string, method: string,middlewares:any[],controller: Controller,): void {
     this.app[method](url, {onRequest:middlewares},async (request: FastifyRequest, reply: FastifyReply) => {
       const httpRequest:HttpRequest = {
@@ -31,7 +28,6 @@ export class FastifyAdapter implements WebFramework {
         //@ts-ignore
         user:request.user ?? undefined
       }
-      
       const response:HttpResponse = await controller.execute(httpRequest)
       if(response.token){
         const {header,payload}  = response.token

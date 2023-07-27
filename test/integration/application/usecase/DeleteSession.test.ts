@@ -17,7 +17,6 @@ beforeEach(async ()=>{
     messageRepository = new InMemoryMessageRepository()
     const user = new User("userNameTest","123456")
     session = new Session("sessao_1")
-    session.addUserId(user.getId())
     const message1 = new Message("hello world 1",user.getId(),session.getId())
     const message2 = new Message("hello world 2",user.getId(),session.getId())
     const message3 = new Message("hello world 3",user.getId(),session.getId())

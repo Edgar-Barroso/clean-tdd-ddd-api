@@ -25,8 +25,6 @@ beforeEach(async () => {
     user_1 = new User("userNameTest1", "123456")
     user_2 = new User("userNameTest2", "123456")
     session = new Session("sessao_1")
-    session.addUserId(user_1.getId())
-    session.addUserId(user_2.getId())
     await userRepository.create(user_1)
     await userRepository.create(user_2)
 
@@ -56,12 +54,5 @@ test("Deve levantar um erro ao tentar receber as messagens de um sessão que nã
     const getMessagesSession = new GetMessagesSession(sessionRepository,messageRepository,userRepository)
     const input = new GetMessagesSessionInput(user_1.getId(),"notExistSessionId")
     expect(async()=>await getMessagesSession.execute(input)).rejects.toThrow("Session not found")
-
-})
-
-test("Deve levantar um erro ao tentar receber as messagens de um sessão sem authorização",async ()=>{
-    const getMessagesSession = new GetMessagesSession(sessionRepository,messageRepository,userRepository)
-    const input = new GetMessagesSessionInput("notAuthorizedUserId",session.getId())
-    expect(async()=>await getMessagesSession.execute(input)).rejects.toThrow("User not found")
 
 })

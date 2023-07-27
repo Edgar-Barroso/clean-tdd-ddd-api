@@ -4,4 +4,8 @@ export class SendMessageInput {
     readonly userId: string,
     readonly sessionId: string
   ) {}
+
+  isValid() {
+    return this.content && this.userId && this.sessionId;
+  }
 }

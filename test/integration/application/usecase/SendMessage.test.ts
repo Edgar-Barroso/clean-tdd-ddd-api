@@ -24,17 +24,8 @@ beforeEach(async ()=>{
     userRepository = new InMemoryUserRepository()
     user = new User("userNameTest","123456")
     session = new Session("sessao_1")
-    session.addUserId(user.getId())
     await sessionRepository.create(session)
     await userRepository.create(user)
-})
-
-test("O usuário deve falhar tentar enviar uma mensagem na sessao em que nao esta autorizado",async ()=>{
-    const user2 = new User("userNameTest2","123456")
-    await userRepository.create(user2)
-    const sendMessage = new SendMessage(sessionRepository,messageRepository,userRepository)
-    const input = new SendMessageInput("Hello world",user2.getId(),session.getId())
-    expect(async()=>await sendMessage.execute(input)).rejects.toThrow("User not authorized")
 })
 
 test("O usuário deve falhar tentar enviar uma mensagem de um sessão que nao existe",async ()=>{

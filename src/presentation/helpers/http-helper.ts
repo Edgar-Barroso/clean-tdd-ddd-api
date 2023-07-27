@@ -2,7 +2,7 @@ import { HttpResponse } from "../core/HttpResponse";
 
 
 
-export const ok = (body: any,props:any): HttpResponse => {
+export const ok = (body: any,props?:any): HttpResponse => {
     return {
         statusCode: 200,
         body,
@@ -12,7 +12,7 @@ export const ok = (body: any,props:any): HttpResponse => {
 export const badRequest = (body?:any):HttpResponse => {
     return {
         statusCode:400,
-        body: body ?? { error: "Bad request" }
+        body: { error: "Bad request" ,...body}
     }
 }
 
@@ -40,10 +40,11 @@ export const forbidden = (): HttpResponse => {
         body: { error: "Forbidden" }
     };
 }
-export const notFound = (): HttpResponse => {
+export const notFound = (body?:any): HttpResponse => {
     return {
         statusCode: 404,
-        body: { error: "Not found" }
+        body: { error: "Not found",...body },
+        
     };
 }
 export const internalServerError = (): HttpResponse => {

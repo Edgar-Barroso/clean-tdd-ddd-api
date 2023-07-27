@@ -24,7 +24,6 @@ export class CreateSessionController implements Controller{
 
         }catch(error){
             return internalServerError()
-        
             }
         }
     
