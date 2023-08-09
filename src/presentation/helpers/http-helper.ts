@@ -2,7 +2,7 @@ import { HttpResponse } from "../core/HttpResponse";
 
 
 
-export const ok = (body: any,props?:any): HttpResponse => {
+export const ok = (body?:any,props?:any): HttpResponse => {
     return {
         statusCode: 200,
         body,

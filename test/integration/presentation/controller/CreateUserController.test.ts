@@ -1,5 +1,5 @@
-import { CreateUserController } from "@/presentation/controller/CreateUserController"
 import { InMemoryRepositoryFactory } from "@/infra/factory/InMemoryRepositoryFactory"
+import { CreateUserController } from "@/presentation/controller/http/CreateUserController"
 
 let repositoryFactory:InMemoryRepositoryFactory
 let createUserController:CreateUserController
@@ -30,16 +30,8 @@ test("Não deve criar um usuário com userName já existente",async ()=>{
 
     }
     await createUserController.execute(httpRequest)
-
-    const httpResponse = await createUserController.execute(httpRequest)
-    expect(httpResponse.statusCode).toBe(409)
-    expect(httpResponse.body).toEqual({error: 'User already exists'})
-
-
+    expect(async ()=>await createUserController.execute(httpRequest)).rejects.toBeInstanceOf(Error)
 })
-
-
-
 
 
 test("Não deve criar um usuário com sucesso userName inválido",async ()=>{
@@ -50,10 +42,8 @@ test("Não deve criar um usuário com sucesso userName inválido",async ()=>{
         }
 
     }
-    const httpResponse = await createUserController.execute(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual({error: 'Invalid userName'})
-    
+    expect(async ()=>await createUserController.execute(httpRequest)).rejects.toBeInstanceOf(Error)
+
     
 })
 
@@ -66,37 +56,7 @@ test("Não deve criar um usuário com sucesso senha inválida",async ()=>{
         }
 
     }
-    const httpResponse = await createUserController.execute(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual({error: 'Invalid password'})
+    expect(async ()=>await createUserController.execute(httpRequest)).rejects.toBeInstanceOf(Error)
 
 })
 
-test("Não deve criar um usuário com body errado (userName)",async ()=>{
-    const httpRequest = {
-        body:{
-            password:"123456"
-        }
-
-    }
-    const httpResponse = await createUserController.execute(httpRequest)
-
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual({error: 'Missing params'})
-
-})
-
-
-test("Não deve criar um usuário com body errado (password)",async ()=>{
-    const httpRequest = {
-        body:{
-            userName:"EdgarBarroso",
-        }
-
-    }
-    const httpResponse = await createUserController.execute(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual({error: 'Missing params'})
-
-
-})

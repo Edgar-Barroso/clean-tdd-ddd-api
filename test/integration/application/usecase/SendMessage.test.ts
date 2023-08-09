@@ -30,18 +30,18 @@ beforeEach(async ()=>{
 
 test("O usuário deve falhar tentar enviar uma mensagem de um sessão que nao existe",async ()=>{
     const sendMessage = new SendMessage(sessionRepository,messageRepository,userRepository)
-    const input = new SendMessageInput("Hello world",user.getId(),new UniqueEntityID().getValue())
+    const input = new SendMessageInput(user.getId(),"session-id-1","Hello world")
     expect(async()=>await sendMessage.execute(input)).rejects.toThrow("Session not found")
 })
 
 test("O usuário deve falhar tentar enviar uma mensagem de um usuário que nao existe",async ()=>{
     const sendMessage = new SendMessage(sessionRepository,messageRepository,userRepository)
-    const input = new SendMessageInput("Hello world",new UniqueEntityID().getValue(),session.getId())
+    const input = new SendMessageInput("user-id-1",session.getId(),"Hello world")
     expect(async()=>await sendMessage.execute(input)).rejects.toThrow("User not found")
 })
 
 test("O usuário deve conseguir enviar uma mensagem na sessao",async ()=>{
     const sendMessage = new SendMessage(sessionRepository,messageRepository,userRepository)
-    const input = new SendMessageInput("Hello world",user.getId(),session.getId())
+    const input = new SendMessageInput(user.getId(),session.getId(),"Hello world")
     await sendMessage.execute(input)
 })

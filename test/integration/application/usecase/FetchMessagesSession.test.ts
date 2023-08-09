@@ -1,5 +1,5 @@
-import { GetMessagesSession } from "@/application/usecase/get-messages-session/GetMessagesSession"
-import { GetMessagesSessionInput } from "@/application/usecase/get-messages-session/GetMessagesSessionInput"
+import { FetchMessagesSession } from "@/application/usecase/fetch-messages-session/FetchMessagesSession"
+import { FetchMessagesSessionInput } from "@/application/usecase/fetch-messages-session/FetchMessagesSessionInput"
 import { Message } from "@/domain/entity/Message"
 import { Session } from "@/domain/entity/Session"
 import { User } from "@/domain/entity/User"
@@ -9,6 +9,7 @@ import { UserRepository } from "@/domain/repository/UserRepository"
 import { InMemoryMessageRepository } from "@/infra/repository/in-memory/InMemoryMessageRepository"
 import { InMemorySessionRepository } from "@/infra/repository/in-memory/InMemorySessionRepository"
 import { InMemoryUserRepository } from "@/infra/repository/in-memory/InMemoryUserRepository"
+
 
 let sessionRepository:SessionRepository
 let messageRepository:MessageRepository
@@ -37,9 +38,9 @@ beforeEach(async () => {
 })
 
 test("Deve receber todas as messagens em uma sessão",async ()=>{
-    const getMessagesSession = new GetMessagesSession(sessionRepository,messageRepository,userRepository)
-    const input = new GetMessagesSessionInput(user_1.getId(),session.getId())
-    const output = await getMessagesSession.execute(input)
+    const fetchMessagesSession = new FetchMessagesSession(sessionRepository,messageRepository,userRepository)
+    const input = new FetchMessagesSessionInput(user_1.getId(),session.getId())
+    const output = await fetchMessagesSession.execute(input)
     expect(output).toMatchObject({messages:
         [
             {userName:"userNameTest1",content:"Hello world - 1",date:new Date("2022-01-01")},
@@ -51,8 +52,16 @@ test("Deve receber todas as messagens em uma sessão",async ()=>{
 })
 
 test("Deve levantar um erro ao tentar receber as messagens de um sessão que não existe",async ()=>{
-    const getMessagesSession = new GetMessagesSession(sessionRepository,messageRepository,userRepository)
-    const input = new GetMessagesSessionInput(user_1.getId(),"notExistSessionId")
-    expect(async()=>await getMessagesSession.execute(input)).rejects.toThrow("Session not found")
+    const fetchMessagesSession = new FetchMessagesSession(sessionRepository,messageRepository,userRepository)
+    const input = new FetchMessagesSessionInput(user_1.getId(),"notExistSessionId")
+    expect(async()=>await fetchMessagesSession.execute(input)).rejects.toThrow("Session not found")
 
 })
+
+test("Deve levantar um erro ao tentar receber as messagens com um usuário que nao existe",async ()=>{
+    const fetchMessagesSession = new FetchMessagesSession(sessionRepository,messageRepository,userRepository)
+    const input = new FetchMessagesSessionInput("NotExistsUserId",session.getId())
+    expect(async()=>await fetchMessagesSession.execute(input)).rejects.toThrow("User not found")
+
+})
+

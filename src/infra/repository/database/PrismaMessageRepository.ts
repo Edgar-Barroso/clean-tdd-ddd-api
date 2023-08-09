@@ -45,7 +45,7 @@ export class PrismaMessageRepository implements MessageRepository {
     await prisma.message.create({
       data: {
         id: message.getId(),
-        content: message.getId(),
+        content: message.content,
         date: message.getDate(),
         sessionId: message.sessionId,
         userId: message.userId,

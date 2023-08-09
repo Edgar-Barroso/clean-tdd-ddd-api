@@ -1,8 +1,9 @@
 export class SendMessageInput {
   constructor(
-    readonly content: string,
     readonly userId: string,
-    readonly sessionId: string
+    readonly sessionId: string,
+    readonly content: string
+
   ) {}
 
   isValid() {

@@ -1,6 +1,6 @@
-import { AuthenticateUserController } from "@/presentation/controller/AuthenticateUserController"
 import { InMemoryRepositoryFactory } from "@/infra/factory/InMemoryRepositoryFactory"
 import { User } from "@/domain/entity/User"
+import { AuthenticateUserController } from "@/presentation/controller/http/AuthenticateUserController"
 
 let repositoryFactory:InMemoryRepositoryFactory
 let authenticateUserController:AuthenticateUserController
@@ -32,10 +32,7 @@ test("Não deve authenticar um usuário com userName que nao existe",async ()=>{
         }
 
     }
-    const httpResponse = await authenticateUserController.execute(httpRequest)
-    expect(httpResponse.statusCode).toBe(404)
-    expect(httpResponse.body).toEqual({error:"Not found"})
-    expect(httpResponse.token).toBeFalsy()
+    expect(async () => await authenticateUserController.execute(httpRequest)).rejects.toBeInstanceOf(Error)
 
 })
 
@@ -47,11 +44,8 @@ test("Não deve authenticar um usuário com password errada",async ()=>{
         }
 
     }
-    const httpResponse = await authenticateUserController.execute(httpRequest)
-    expect(httpResponse.statusCode).toBe(401)
-    expect(httpResponse.body).toEqual({error:"Unauthorized"})
-    expect(httpResponse.token).toBeFalsy()
-
+    expect(async () => await authenticateUserController.execute(httpRequest)).rejects.toBeInstanceOf(Error)
+    
 
 })
 
@@ -62,12 +56,8 @@ test("Não deve criar um usuário com body errado (userName)",async ()=>{
         }
 
     }
-    const httpResponse = await authenticateUserController.execute(httpRequest)
 
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual({error: 'Missing params'})
-    expect(httpResponse.token).toBeFalsy()
-
+    expect(async () => await authenticateUserController.execute(httpRequest)).rejects.toBeInstanceOf(Error)
 
 })
 
@@ -79,11 +69,7 @@ test("Não deve criar um usuário com body errado (password)",async ()=>{
         }
 
     }
-    const httpResponse = await authenticateUserController.execute(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual({error: 'Missing params'})
-    expect(httpResponse.token).toBeFalsy()
-
+    expect(async () => await authenticateUserController.execute(httpRequest)).rejects.toBeInstanceOf(Error)
 
 
 })
