@@ -6,7 +6,6 @@ import { CreateSessionInput } from "@/application/usecase/create-session/CreateS
 import { Controller } from "@/presentation/core/Controller";
 import { HttpRequest } from "@/presentation/core/HttpRequest";
 import { HttpResponse } from "@/presentation/core/HttpResponse";
-import { badRequest, created, internalServerError } from "@/presentation/helpers/http-helper";
 
 export class CreateSessionController implements Controller{
     sessionRepository:SessionRepository;

@@ -10,7 +10,6 @@ import { UserNotFoundError } from "@/application/errors/UserNotFoundError";
 import { Controller } from "@/presentation/core/Controller";
 import { HttpRequest } from "@/presentation/core/HttpRequest";
 import { HttpResponse } from "@/presentation/core/HttpResponse";
-import { badRequest, internalServerError, notFound, ok, unauthorized } from "@/presentation/helpers/http-helper";
 
 export class AuthenticateUserController implements Controller{
     userRepository:UserRepository

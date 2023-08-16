@@ -8,7 +8,6 @@ import { UserRepository } from "@/domain/repository/UserRepository";
 import { Controller } from "@/presentation/core/Controller";
 import { HttpRequest } from "@/presentation/core/HttpRequest";
 import { HttpResponse } from "@/presentation/core/HttpResponse";
-import { badRequest, created, conflict, internalServerError } from "@/presentation/helpers/http-helper";
 
 export class CreateUserController implements Controller{
     userRepository:UserRepository

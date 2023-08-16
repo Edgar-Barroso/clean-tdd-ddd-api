@@ -15,12 +15,11 @@ Before getting started, make sure you have the following tools and services in p
 1. Clone this repository to your local environment.
 2. Navigate to the project directory using your terminal.
 3. Run the command `npm install` to install all required dependencies.
-4. Create a `.env` file based on the `.env.example` template, and provide necessary environment variables.
+
 
 ## Configuration
 
-1. Rename the `config.example.json` file to `config.json`.
-2. Open the `config.json` file and customize it according to your preferences. Configure database settings, server port, and other relevant options.
+1. Create a `.env` file based on the `.env.example` template, and provide necessary environment variables.
 
 
 ## Prisma Setup

@@ -10,7 +10,6 @@ import { FetchMessagesSessionInput } from "@/application/usecase/fetch-messages-
 import { Controller } from "@/presentation/core/Controller";
 import { HttpRequest } from "@/presentation/core/HttpRequest";
 import { HttpResponse } from "@/presentation/core/HttpResponse";
-import { badRequest, ok, notFound, internalServerError } from "@/presentation/helpers/http-helper";
 
 export class FetchMessagesSessionController implements Controller{
     sessionRepository: SessionRepository;

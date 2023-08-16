@@ -6,7 +6,4 @@ export class SendMessageInput {
 
   ) {}
 
-  isValid() {
-    return this.content && this.userId && this.sessionId;
-  }
 }

@@ -13,11 +13,12 @@ import jwt from 'jsonwebtoken';
 import { ValidationError } from "@/domain/entity/errors/ValidationError";
 import { UserNotFoundError } from "@/application/errors/UserNotFoundError";
 import { SessionNotFoundError } from "@/application/errors/SessionNotFoundError";
+import { ErrorHandler } from "../core/ErrorHandler";
 
 export class FastifyAdapter implements WebFramework {
   app: any;
 
-  constructor() {
+  constructor(readonly errorHandler:ErrorHandler) {
     this.app = fastify();
     this.app.register(websocketPlugin);
     this.app.register(cors, {
@@ -29,20 +30,13 @@ export class FastifyAdapter implements WebFramework {
       secret: env.JWT_SECRET,
     });
 
+  }
+
+  setErrorHandler(errorHandler: ErrorHandler): void {
     this.app.setErrorHandler((error:Error, _:any, reply:FastifyReply) => {
-      if (error instanceof Error){
-        return reply
-            .status(400)
-            .send({ message:error.message});
-      }
-      if (env.NODE_ENV !== "production") {
-          console.error(error);
-      } else {
-          // fazer o log para uma ferramenta externa ex: DataDog/NewReplic/Sentry
-      }
-  
-      return reply.status(500).send({ message: "Internal server error." });
-  });
+      const {statusCode,body} = errorHandler.execute(error)
+      return reply.status(statusCode).send(body);
+  })
   }
 
   ws(url: string, method: string, middlewares: any[], controller: any): void {
@@ -85,7 +79,6 @@ export class FastifyAdapter implements WebFramework {
       return reply.status(401).send({message:'Unauthorized.'})
     }
   }
-
 
   listen(port: number): void {
     this.app

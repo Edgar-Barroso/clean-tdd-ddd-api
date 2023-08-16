@@ -1,10 +1,10 @@
-import { env } from "./env";
 import { PrismaRepositoryFactory } from "./infra/factory/DatabaseRepositoryFactory";
+import { DevErrorHandler } from "./presentation/router/DevErrorHandler";
 import { FastifyAdapter } from "./presentation/router/FastifyAdapter";
 import { RouteConfig } from "./presentation/router/RouteConfig";
 
-
-const app = new FastifyAdapter()
+const errorHandler = new DevErrorHandler()
+const app = new FastifyAdapter(errorHandler)
 const repositoryFactory = new PrismaRepositoryFactory()
 new RouteConfig(app,repositoryFactory)
-app.listen(env.PORT)
+export default app

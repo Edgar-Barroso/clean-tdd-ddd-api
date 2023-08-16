@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/main.ts",
+    "dev": "tsx watch src/server.ts",
     "test:all": "vitest run --dir test",
     "test:unit": "vitest run --dir test/unit",
     "test:integration": "vitest run --dir test/integration",

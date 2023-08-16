@@ -3,7 +3,4 @@ export class CreateUserInput{
         
     }
 
-    isValid(){
-        return (this.password && this.userName)
-    }
 }

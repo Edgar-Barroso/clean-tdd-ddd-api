@@ -1,7 +1,4 @@
-
 import { RepositoryFactory } from "@/domain/factory/RepositoryFactory";
-import  { SocketStream } from "@fastify/websocket";
-import { FastifyRequest } from "fastify";
 import { AuthenticateUserController } from "../controller/http/AuthenticateUserController";
 import { CreateSessionController } from "../controller/http/CreateSessionController";
 import { CreateUserController } from "../controller/http/CreateUserController";
